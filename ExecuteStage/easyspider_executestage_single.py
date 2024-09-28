@@ -79,7 +79,7 @@ def download_image(url, save_directory):
     }
     
     # 发送 GET 请求获取图片数据
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, timeout=60)
 
     # 检查响应状态码是否为成功状态
     if response.status_code == requests.codes.ok:
@@ -1074,7 +1074,7 @@ if __name__ == '__main__':
     backEndAddress = c.server_address
     if c.read_type == "remote":
         print("remote")
-        content = requests.get(backEndAddress + "/queryExecutionInstance?id=" + str(id))
+        content = requests.get(backEndAddress + "/queryExecutionInstance?id=" + str(id), timeout=60)
         service = json.loads(content.text)  # 加载服务信息
     else:
         print("local")

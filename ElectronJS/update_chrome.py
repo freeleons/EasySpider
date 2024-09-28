@@ -93,7 +93,7 @@ if __name__ == "__main__":
     os.system("npm install -g extract-stealth-evasions") # 安装stealth.min.js
     os.system("npx extract-stealth-evasions") # 提取stealth.min.js
     driver_downloads = []
-    response = requests.get(chrome_driver_url)
+    response = requests.get(chrome_driver_url, timeout=60)
     if response.status_code == 200:
         versions = json.loads(response.content)["versions"]
         versions = versions[::-1] # 倒序排列数组
