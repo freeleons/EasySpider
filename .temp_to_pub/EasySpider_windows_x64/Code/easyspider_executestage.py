@@ -46,6 +46,8 @@ import sys
 import time
 import requests
 from multiprocessing import freeze_support
+from security import safe_command
+
 freeze_support()  # 防止无限死循环多开
 try:
     from ddddocr import DdddOcr
@@ -816,8 +818,7 @@ class BrowserThread(Thread):
             # 执行系统命令
             try:
                 # output = subprocess.run(code, capture_output=True, text=True, timeout=max_wait_time, encoding="utf-8", shell=True)
-                output = subprocess.run(
-                    code, capture_output=True, text=True, timeout=max_wait_time, shell=True)
+                output = safe_command.run(subprocess.run, code, capture_output=True, text=True, timeout=max_wait_time, shell=True)
                 # 输出命令返回值
                 output = output.stdout
                 self.print_and_log(output)
