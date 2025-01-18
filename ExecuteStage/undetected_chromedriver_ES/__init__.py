@@ -15,6 +15,7 @@ by UltrafunkAmsterdam (https://github.com/ultrafunkamsterdam)
 
 """
 from __future__ import annotations
+from security import safe_command
 
 
 __version__ = "3.4.7"
@@ -463,8 +464,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
                 options.binary_location, *options.arguments
             )
         else:
-            browser = subprocess.Popen(
-                [options.binary_location, *options.arguments],
+            browser = safe_command.run(subprocess.Popen, [options.binary_location, *options.arguments],
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
