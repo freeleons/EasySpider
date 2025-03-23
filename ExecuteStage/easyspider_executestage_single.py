@@ -28,7 +28,6 @@ from selenium.common.exceptions import StaleElementReferenceException, InvalidSe
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver import ActionChains
-import random
 # import numpy
 import csv
 import os
@@ -37,6 +36,7 @@ from commandline_config import Config
 import pytesseract
 from PIL import Image
 import uuid
+import secrets
 
 saveName, log, OUTPUT, browser, SAVED = None, "", "", None, False
 
@@ -690,7 +690,7 @@ def clickElement(param, loopElement=None, clickPath="", index=0):
         recordLog(str(e))
     time.sleep(0.5)  # 点击之后等半秒
     Log("Wait 0.5 second after clicking element")
-    time.sleep(random.uniform(1, 2))  # 生成一个a到b的小数等待时间
+    time.sleep(secrets.SystemRandom().uniform(1, 2))  # 生成一个a到b的小数等待时间
     # 点击前对该元素执行一段JavaScript代码
     try:
         if param["afterJS"] != "":
@@ -1068,7 +1068,7 @@ if __name__ == '__main__':
         saveName = "task_" + str(id) + "_" + c.saved_file_name  # 保存文件的名字
     else:
         saveName = "task_" + str(id) + "_" + \
-            str(random.randint(0, 999999999))  # 保存文件的名字
+            str(secrets.SystemRandom().randint(0, 999999999))  # 保存文件的名字
     print("saveName: ", saveName)
     os.mkdir("Data/" + saveName)  # 创建保存文件夹用来保存截图
     backEndAddress = c.server_address

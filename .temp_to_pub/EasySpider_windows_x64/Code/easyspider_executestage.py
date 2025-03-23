@@ -16,7 +16,6 @@ from commandline_config import Config
 import os
 import csv
 from openpyxl import load_workbook, Workbook
-import random
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -46,6 +45,8 @@ import sys
 import time
 import requests
 from multiprocessing import freeze_support
+import secrets
+
 freeze_support()  # 防止无限死循环多开
 try:
     from ddddocr import DdddOcr
@@ -1064,7 +1065,7 @@ class BrowserThread(Thread):
             if waitType == 0:  # 固定等待时间
                 time.sleep(waitTime)
             elif waitType == 1:  # 随机等待时间
-                time.sleep(random.uniform(waitTime * 0.5, waitTime * 1.5))
+                time.sleep(secrets.SystemRandom().uniform(waitTime * 0.5, waitTime * 1.5))
         self.event.wait()  # 等待事件结束
 
     # 对判断条件的处理
@@ -1273,7 +1274,7 @@ class BrowserThread(Thread):
                             self.print_and_log(e)
                             exitElements = []
                             # newBodyText为随机文本，保证一直执行
-                            newBodyText = str(random.random())
+                            newBodyText = str(secrets.SystemRandom().random())
                         if node["parameters"]["iframe"]:  # 如果标记了iframe
                             iframes = self.browser.find_elements(
                                 By.CSS_SELECTOR, "iframe", iframe=False)
@@ -1806,7 +1807,7 @@ class BrowserThread(Thread):
         if waitType == 0:  # 固定等待时间
             time.sleep(waitTime)
         elif waitType == 1:  # 随机等待时间
-            time.sleep(random.uniform(waitTime * 0.5, waitTime * 1.5))
+            time.sleep(secrets.SystemRandom().uniform(waitTime * 0.5, waitTime * 1.5))
         if tempHandleNum != len(self.browser.window_handles):  # 如果有新标签页的行为发生
             self.browser.switch_to.window(
                 self.browser.window_handles[-1])  # 跳转到新的标签页
@@ -2350,7 +2351,7 @@ if __name__ == '__main__':
         for i in range(len(c.ids)):
             id = c.ids[i]
             # 从字符集中随机选择字符构成字符串
-            random_string = ''.join(random.choice(characters) for i in range(10))
+            random_string = ''.join(secrets.choice(characters) for i in range(10))
             tmp_user_data_folder = os.path.join(tmp_user_folder_parent, "user_data_" + str(id) + "_" + str(time.time()).replace(".","") + "_" + random_string)
             tmp_options[i]["tmp_user_data_folder"] = tmp_user_data_folder
             if os.path.exists(tmp_user_data_folder):

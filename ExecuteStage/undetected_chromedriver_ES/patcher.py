@@ -6,7 +6,6 @@ import io
 import logging
 import os
 import pathlib
-import random
 import re
 import shutil
 import string
@@ -17,6 +16,7 @@ from urllib.request import urlopen
 from urllib.request import urlretrieve
 import zipfile
 from multiprocessing import Lock
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -294,7 +294,7 @@ class Patcher(object):
 
     @staticmethod
     def gen_random_cdc():
-        cdc = random.choices(string.ascii_letters, k=27)
+        cdc = secrets.SystemRandom().choices(string.ascii_letters, k=27)
         return "".join(cdc).encode()
 
     def is_binary_patched(self, executable_path=None):
