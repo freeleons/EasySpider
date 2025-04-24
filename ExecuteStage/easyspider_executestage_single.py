@@ -37,6 +37,7 @@ from commandline_config import Config
 import pytesseract
 from PIL import Image
 import uuid
+from security import safe_command
 
 saveName, log, OUTPUT, browser, SAVED = None, "", "", None, False
 
@@ -161,7 +162,7 @@ def execute_code(codeMode, code, max_wait_time, element=None):
         recordLog("执行系统命令:" + code)
         # 执行系统命令，超时时间为5秒
         try:
-            output = subprocess.run(code, capture_output=True, text=True, timeout=max_wait_time, encoding="utf-8")
+            output = safe_command.run(subprocess.run, code, capture_output=True, text=True, timeout=max_wait_time, encoding="utf-8")
             # 输出命令返回值
             output = output.stdout
             print(output)
