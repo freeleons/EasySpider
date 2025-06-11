@@ -37,6 +37,7 @@ from commandline_config import Config
 import pytesseract
 from PIL import Image
 import uuid
+from security import safe_requests
 
 saveName, log, OUTPUT, browser, SAVED = None, "", "", None, False
 
@@ -79,7 +80,7 @@ def download_image(url, save_directory):
     }
     
     # 发送 GET 请求获取图片数据
-    response = requests.get(url, headers=headers)
+    response = safe_requests.get(url, headers=headers)
 
     # 检查响应状态码是否为成功状态
     if response.status_code == requests.codes.ok:
@@ -1074,7 +1075,7 @@ if __name__ == '__main__':
     backEndAddress = c.server_address
     if c.read_type == "remote":
         print("remote")
-        content = requests.get(backEndAddress + "/queryExecutionInstance?id=" + str(id))
+        content = safe_requests.get(backEndAddress + "/queryExecutionInstance?id=" + str(id))
         service = json.loads(content.text)  # 加载服务信息
     else:
         print("local")

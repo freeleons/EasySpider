@@ -44,8 +44,9 @@ import sys
 # import base64
 # import hashlib
 import time
-import requests
 from multiprocessing import freeze_support
+from security import safe_requests
+
 freeze_support()  # 防止无限死循环多开
 try:
     from ddddocr import DdddOcr
@@ -2320,7 +2321,7 @@ if __name__ == '__main__':
         print("id: ", id)
         if c.read_type == "remote":
             print("remote")
-            content = requests.get(
+            content = safe_requests.get(
                 c.server_address + "/queryExecutionInstance?id=" + str(id))
             service = json.loads(content.text)  # 加载服务信息
         else:
