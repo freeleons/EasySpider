@@ -2390,7 +2390,7 @@ if __name__ == '__main__':
         if c.read_type == "remote":
             print("remote")
             content = requests.get(
-                c.server_address + "/queryExecutionInstance?id=" + str(id))
+                c.server_address + "/queryExecutionInstance?id=" + str(id), timeout=60)
             service = json.loads(content.text)  # 加载服务信息
         else:
             print("local")
