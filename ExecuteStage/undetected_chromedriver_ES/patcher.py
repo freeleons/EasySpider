@@ -203,7 +203,7 @@ class Patcher(object):
                     exc.append(e)  # since some systems apprently allow seeking
                     # we conduct another test
                 try:
-                    fs.readline()
+                    fs.readline(5_000_000)
                 except PermissionError as e:
                     exc.append(e)
 
